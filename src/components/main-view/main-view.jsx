@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
@@ -8,6 +9,12 @@ export const MainView = () => {
         { id: 3, title: "The Godfather", image: "https://m.media-amazon.com/images/I/71mfJsyJO4L._AC_UF894,1000_QL80_.jpg", director: "Francis Ford Coppola" },
         { id: 4, title: "Jurrasic Park", image: "https://m.media-amazon.com/images/I/81AGqBcpYOL._AC_UF894,1000_QL80_.jpg", director: "Steven Spielberg" }
     ]);
+
+    const [selectedMovie, setSelectedMovie] = useState(null);
+
+    if (selectedMovie) {
+        return (<MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+        );
     }
 
     if (movies.length === 0) {
