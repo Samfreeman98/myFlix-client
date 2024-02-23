@@ -13,22 +13,26 @@ export const MainView = () => {
             .then((data) => {
                 const moviesFromApi = data.map((movie) => {
                     return {
-                        id: movie.key,
+                        id: movie_id,
                         title: movie.title,
-                        director: movie.director_name?.[0]
+                        director: movie.director.name?.[0],
                     };
                 });
-                setMovies(moviesFromApi)
+                setMovies(moviesFromApi);
             });
     }, []);
 
     if (selectedMovie) {
-        return (<MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+        return (
+            <MovieView
+                movie={selectedMovie}
+                onBackClick={() => setSelectedMovie(null)}
+            />
         );
     }
 
     if (movies.length === 0) {
-        return <div>The list is empty!</div>
+        return <div>The list is empty!</div>;
     }
 
     return (
@@ -44,4 +48,4 @@ export const MainView = () => {
             ))}
         </div>
     );
-}
+};
