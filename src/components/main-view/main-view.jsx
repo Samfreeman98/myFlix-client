@@ -15,7 +15,6 @@ export const MainView = () => {
                     return {
                         id: movie.key,
                         title: movie.title,
-                        image: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
                         director: movie.director_name?.[0]
                     };
                 });
