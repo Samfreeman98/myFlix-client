@@ -13,10 +13,10 @@ export const MainView = () => {
             .then((data) => {
                 const moviesFromApi = data.docs.map((doc) => {
                     return {
-                        id: doc.key,
-                        title: doc.title,
+                        id: movie.key,
+                        title: movie.title,
                         image: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
-                        director: doc.director_name?.[0]
+                        director: movie.director_name?.[0]
                     };
                 });
                 setMovies(moviesFromApi)
