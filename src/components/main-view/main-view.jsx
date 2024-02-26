@@ -49,3 +49,7 @@ export const MainView = () => {
         </div>
     );
 };
+
+MainView.propTypes = {
+
+};
