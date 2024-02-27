@@ -59,6 +59,4 @@ export const MainView = () => {
     );
 };
 
-MainView.propTypes = {
-
-};
+MainView.propTypes = {};
