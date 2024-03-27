@@ -1,31 +1,54 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-    const [movies, setMovies] = useState([
-        { id: 1, title: "Inception", image: "https://m.media-amazon.com/images/S/pv-target-images/2b8bc4866e28f9b95c65965a2b33c8b14a8cebe8287b7399b536c672729ef018.jpg", director: "Christopher Nolan" },
-        { id: 2, title: "Get Out", image: "https://m.media-amazon.com/images/I/91yhYRckRvL._AC_UF894,1000_QL80_.jpg", director: "Jordan Peele" },
-        { id: 3, title: "The Godfather", image: "https://m.media-amazon.com/images/I/71mfJsyJO4L._AC_UF894,1000_QL80_.jpg", director: "Francis Ford Coppola" },
-        { id: 4, title: "Jurrasic Park", image: "https://m.media-amazon.com/images/I/81AGqBcpYOL._AC_UF894,1000_QL80_.jpg", director: "Steven Spielberg" }
-    ]);
+    const [movies, setMovies] = useState([]);
 
     const [selectedMovie, setSelectedMovie] = useState(null);
 
+    useEffect(() => {
+        fetch("https://sam-movie-app-23613c1df2cd.herokuapp.com/movies")
+            .then((response) => response.json())
+            .then((data) => {
+                const moviesFromApi = data.map((movie) => {
+                    return {
+                        Genre: {
+                            Name: movie.Genre.Name,
+                            Description: movie.Genre.Description,
+                        },
+                        Director: {
+                            Name: movie.Director.Name,
+                            Bio: movie.Director.Bio,
+                            Birth: movie.Director.Birth,
+                        },
+                        _id: movie._id,
+                        Title: movie.Title,
+                        Featured: movie.Featured,
+                    };
+                });
+                setMovies(moviesFromApi);
+            });
+    }, []);
+
     if (selectedMovie) {
-        return (<MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+        return (
+            <MovieView
+                movie={selectedMovie}
+                onBackClick={() => setSelectedMovie(null)}
+            />
         );
     }
 
     if (movies.length === 0) {
-        return <div>The list is empty!</div>
+        return <div>The list is empty!</div>;
     }
 
     return (
         <div>
             {movies.map((movie) => (
                 <MovieCard
-                    key={movie.id}
+                    key={movie._id}
                     movie={movie}
                     onMovieClick={(newSelectedMovie) => {
                         setSelectedMovie(newSelectedMovie);
@@ -34,4 +57,6 @@ export const MainView = () => {
             ))}
         </div>
     );
-}
+};
+
+MainView.propTypes = {};
